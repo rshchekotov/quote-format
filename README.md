@@ -24,9 +24,9 @@ In Future, there might be some simpler ways of achieving these actions such as k
 The second way of using this tool is to format an existing quote. For that you are required to use the WebConsole and stick to following format (it will be filled out with Dummie Information, which you'll have to replace):
 ```json
 formatQuote({  
-	author: 'Noone',  
-	quote: 'Nothing',  
-	number: 1  
+	"author": "Noone",  
+	"quote": "Nothing",  
+	"number": 1  
 });  
 ```
 
@@ -43,4 +43,4 @@ The Author and Quote take any string of reasonable size for a quote, when overfl
 
 ## Credits
 
-I did the whole Programming and `@tari#8244` and `@Krista#4475` helped with Design Questions and Decisions! This whole project was dedicated to the [Progammers Palace Server](www.programmerspalace.com) - Thanks for providing an awesome community to learn, teach and chill in!
+I did the whole Programming and `@tari#8244` and `@Krista#4475` helped with Design Questions and Decisions! This whole project was dedicated to the [Progammers Palace Server](http://www.programmerspalace.com) - Thanks for providing an awesome community to learn, teach and chill in!
