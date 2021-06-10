@@ -4,10 +4,56 @@
 		<meta charset="UTF-8" />
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+			@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+			@import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
 		</style>
+		<link rel="stylesheet" href="./index.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	</head>
 	<body>
-		<canvas id="canvas" width="600" height="400"></canvas>
+		<div class="center">
+			<canvas id="canvas" width="600" height="400"></canvas>
+
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<input placeholder="Author" id="quote-author" type="text" class="validate">
+							<label for="first_name">Author</label>
+						</div>
+						<div class="input-field col s6">
+							<input placeholder="Quote Number" id="quote-number" type="text" class="validate">
+							<label for="first_name">Quote Number</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s10">
+							<textarea id="quote-field" class="materialize-textarea"></textarea>
+							<label for="textarea1">Quote</label>
+						</div>
+						<button class="btn waves-effect waves-light" type="submit" name="action" onclick="handleForm()">Format
+							<i class="material-icons">send</i>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<ul class="collection" id="actions-menu">
+			<li class="collection-item" id="quote-lock" onclick="contextButton(0)">
+				<div>Lock Quote<a class="secondary-content"><i class="material-icons">article</i></a></div>
+			</li>
+			<li class="collection-item" id="theme-lock" onclick="contextButton(1)">
+				<div>Lock Theme<a class="secondary-content"><i class="material-icons">tag</i></a></div>
+			</li>
+			<li class="collection-item" onclick="contextButton(2)">
+				<div>Save<a class="secondary-content"><i class="material-icons">save</i></a></div>
+			</li>
+			<li class="collection-item" onclick="contextButton(3,state.day)">
+				<div>Next<a class="secondary-content"><i class="material-icons">forward</i></a></div>
+			</li>
+		</ul>
+		<a style="display: none" id="download"></a>
 		<script src="./index.js"></script>
 	</body>
 </html>

@@ -133,16 +133,32 @@ function box(x, y, w, h, r) {
 	ctx.fill();
 }
 
-function cacheQuote() {
-	if(state.quote) {
-		state.quote.cached = true;
-	}
+function saveToFile() {
+	let download = document.getElementById("download");
+	download.setAttribute("download", `quote-${state.day}.png`);
+	download.setAttribute("href", canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'));
+	download.click();
 }
 
-function cacheTheme() {
-	if(state.theme) {
-		state.theme.cached = true;
+function toggleQuote() {
+	if(state.quote) {
+		state.quote.cached = !state.quote.cached;
 	}
+	let btntxt = state.quote.cached ? "Unlock Quote" : "Lock Quote";
+	btntxt += "<a class=\"secondary-content\"><i class=\"material-icons\">article</i></a>";
+	document.getElementById("quote-lock").innerHTML = btntxt;
+	M.toast({ html: `Quote is now ${state.quote.cached ? 'frozen' : 'variable'}.` });
+}
+
+function toggleTheme() {
+	if(state.theme) {
+		state.theme.cached = !state.theme.cached;
+	}
+	let btntxt = state.quote.cached ? "Unlock Theme" : "Lock Theme";
+	btntxt += "<a class=\"secondary-content\"><i class=\"material-icons\">tag</i></a>";
+	document.getElementById("theme-lock").innerHTML = btntxt;
+
+	M.toast({ html: `Theme is now ${state.quote.cached ? 'frozen' : 'variable'}.` });
 }
 
 function formatQuote(args) {
@@ -150,6 +166,13 @@ function formatQuote(args) {
 		console.error("Couldn't find required properties in argument!");
 		return;
 	}
+
+	state.quote = { quote: args.quote, author: args.author };
+	state.day = args.number;
+	document.getElementById("quote-author").value = state.quote.author;
+	document.getElementById("quote-number").value = state.day;
+	document.getElementById("quote-field").value = state.quote.quote;
+	M.textareaAutoResize(document.getElementById("quote-field"));
 	
 	cclear();
 	let linear = ctx.createLinearGradient(0, 200, 600, 200);
@@ -227,9 +250,57 @@ async function loadRandom(num) {
 	
 	if(!state.quote || !state.quote.cached) state.quote = data;
 	else data = state.quote;
-	await formatQuote(Object.assign({ number: num }, data));
+	formatQuote(Object.assign({ number: num }, data));
+}
+
+function showMenu(event) {
+	document.querySelector("ul#actions-menu").style.display = "inline-block";
+	document.querySelector("ul#actions-menu").style.top = event.clientY + "px";
+	document.querySelector("ul#actions-menu").style.left = event.clientX + "px";
+}
+
+function hideMenu() {
+	document.querySelector("ul#actions-menu").style.display = "none";
+}
+
+function contextButton(num, args) {
+	hideMenu();
+	({
+		0: toggleQuote,
+		1: toggleTheme,
+		2: saveToFile,
+		3: loadRandom
+	}[num])(args);
+}
+
+function handleForm() {
+	let author = document.getElementById("quote-author").value;
+	document.getElementById("quote-author").value = "";
+	let number = document.getElementById("quote-number").value;
+	document.getElementById("quote-number").value = "";
+	let quote = document.getElementById("quote-field").value;
+	document.getElementById("quote-field").value = "";
+	formatQuote({ author: author, quote: quote, number: number });
 }
 
 loadGradients();
 loadRandom(state.day);
 canvas.addEventListener('click', () => loadRandom(state.day));
+
+document.addEventListener('contextmenu', (e) => {
+	e.preventDefault();
+	showMenu(e);
+});
+
+document.addEventListener( "click", function(e) {
+	var button = e.button;
+	if ( button === 0 ) {
+		hideMenu();
+	}
+});
+
+window.onkeyup = function(e) {
+	if ( e.keyCode === 27 ) {
+		hideMenu();
+	}
+}
