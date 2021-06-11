@@ -19,7 +19,7 @@ ul#actions-menu {
   margin-right: auto;
 }
 
-.row > form > .row {
+.row > div > .row {
   position: relative;
 }
 

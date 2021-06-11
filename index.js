@@ -228,7 +228,8 @@ function formatQuote(args) {
 	dk(540,340,20);
 }
 
-async function loadRandom(num) {	
+async function loadRandom(num) {
+	console.log('LOADING RANDOM');
 	let urls = [
 		{ w: 1, obj: 'http://quotes.stormconsultancy.co.uk/random.json'},
 		{ w: 9, obj: 'https://type.fit/api/quotes'}
@@ -285,7 +286,10 @@ function handleForm() {
 
 loadGradients();
 loadRandom(state.day);
-canvas.addEventListener('click', () => loadRandom(state.day));
+canvas.addEventListener('click', () => {
+	console.log('Generating New!');
+	loadRandom(state.day)
+});
 
 document.addEventListener('contextmenu', (e) => {
 	e.preventDefault();
